@@ -2,49 +2,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RIM</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RIM Design Studio</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #000000;
-            color: #ffffff;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-        }
-
-        .rim {
-            font-size: clamp(70px, 18vw, 180px);
-            font-weight: 900;
-            letter-spacing: 12px;
-            color: #ffffff;
-            text-shadow: 0 0 20px #ffffff55;
-            animation: rotateRIM 4s linear infinite;
-        }
-
-        @keyframes rotateRIM {
-            from {
-                transform: rotateY(0deg);
-            }
-            to {
-                transform: rotateY(360deg);
-            }
-        }
-    </style>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#050505;color:white;
+ font-family:Arial,sans-serif;text-align:center;
+}
+header{padding:35px 15px 15px}
+h1{color:#e7c46d;letter-spacing:5px}
+p{color:#aaa;font-size:14px}
+.hero{
+ min-height:310px;display:flex;flex-direction:column;
+ justify-content:center;align-items:center;
+ background:radial-gradient(circle,#30200b,#050505 65%);
+}
+.big{
+ font-size:clamp(100px,25vw,190px);
+ font-weight:900;letter-spacing:-12px;
+ background:linear-gradient(135deg,#fff4bd,#bd862b,#fff0a5,#76501b);
+ -webkit-background-clip:text;color:transparent;
+ filter:drop-shadow(0 0 20px #d5a74455);
+ animation:spin 7s linear infinite;
+}
+@keyframes spin{
+ from{transform:rotateY(0deg)}
+ to{transform:rotateY(360deg)}
+}
+button,select{
+ padding:12px 17px;margin:6px;border-radius:25px;
+ border:1px solid #b99548;background:#111;color:#f5d98c;
+ cursor:pointer;
+}
+button:hover{background:#b99548;color:#000}
+h2{color:#e7c46d;margin-top:35px}
+.gallery{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+ gap:13px;padding:15px;max-width:1000px;margin:auto;
+}
+.card{
+ min-height:150px;border:1px solid #302819;border-radius:14px;
+ background:linear-gradient(145deg,#17130d,#080808);
+ display:flex;flex-direction:column;align-items:center;
+ justify-content:center;cursor:pointer;transition:.25s;
+}
+.card:hover{transform:translateY(-5px);border-color:#e7c46d}
+.word{font-size:42px;font-weight:900;letter-spacing:-3px}
+.name{font-size:11px;color:#aaa;margin-top:15px}
+.royal{color:#f0ce70;text-shadow:0 0 15px #bd842b;font-family:Georgia}
+.calligraphy{font-family:cursive;font-style:italic;color:#f5e7d0}
+.cartoon{color:#ffdf39;-webkit-text-stroke:1px #fff;text-shadow:3px 4px #ec3981}
+.king{color:#e8cb79;text-shadow:0 0 12px gold}
+.metal{color:#ddd;text-shadow:2px 3px #666,0 0 15px white}
+.anime{color:#9beaff;text-shadow:0 0 15px #168cff}
+.graffiti{color:#ff613d;text-shadow:3px 3px #9b31c7,-2px -2px cyan}
+.neon{color:white;text-shadow:0 0 8px cyan,0 0 22px blue}
+.floral{color:#f2a9c7;font-family:Georgia}
+.fire{color:#ff8b28;text-shadow:0 0 15px red,0 0 25px orange}
+.minimal{color:#eee;font-weight:300;letter-spacing:8px}
+.gothic{font-family:Georgia;color:#bbb;text-shadow:0 0 12px #888}
+.ice{color:#a9f5ff;text-shadow:0 0 15px #42dfff}
+.warrior{color:#d4ad63;text-shadow:3px 3px #555}
+.signature{font-family:cursive;font-style:italic;color:#f2e3c2}
+#preview{display:none;padding:30px}
+#large{font-size:clamp(70px,18vw,140px);font-weight:900}
+#copyPrompt{max-width:500px;width:90%;margin:12px auto;color:#ccc;line-height:1.5}
+footer{padding:35px;color:#777;font-size:12px}
+</style>
 </head>
 
 <body>
-    <div class="rim">RIM</div>
+<header>
+ <h1>RIM DESIGN STUDIO</h1>
+ <p>ONE WORD. UNLIMITED STYLES.</p>
+</header>
+
+<section class="hero">
+ <div class="big">RIM</div>
+ <p>Choose your style. Create your identity.</p>
+ <button onclick="document.getElementById('designs').scrollIntoView({behavior:'smooth'})">
+ Explore Designs ↓
+ </button>
+</section>
+
+<h2 id="designs">THE DESIGN COLLECTION</h2>
+<p>Tap any design to preview it.</p>
+
+<div class="gallery" id="gallery"></div>
+
+<section id="preview">
+ <h2 id="previewName"></h2>
+ <div id="large"></div>
+ <p id="copyPrompt"></p>
+ <button onclick="downloadDesign()">Download Design</button>
+ <button onclick="copyPrompt()">Copy Design Prompt</button>
+ <button onclick="closePreview()">Close</button>
+</section>
+
+<footer>RIM DESIGN STUDIO · MADE FOR CREATIVITY</footer>
+
+<script>
+const styles=[
+ ["Royal Luxury","royal","Golden royal letters, crown, diamonds, black velvet"],
+ ["Calligraphy","calligraphy","Elegant flowing handwritten ink lettering"],
+ ["Cartoon","cartoon","Cute colourful 3D cartoon lettering"],
+ ["King & Queen","king","Majestic crown, throne and royal jewels"],
+ ["3D Metallic","metal","Reflective silver chrome 3D letters"],
+ ["Anime Fantasy","anime","Magical blue energy and fantasy sparks"],
+ ["Graffiti","graffiti","Urban spray paint, bold outlines and splashes"],
+ ["Neon Cyberpunk","neon","Electric cyan neon tubes on black"],
+ ["Floral","floral","Pink roses, green vines and delicate leaves"],
+ ["Fire","fire","Molten orange flames and glowing embers"],
+ ["Minimalist","minimal","Clean white typography and premium spacing"],
+ ["Dark Gothic","gothic","Mysterious gothic silver lettering"],
+ ["Fire & Ice","ice","Frosted crystal letters with icy glow"],
+ ["Fantasy Warrior","warrior","Ancient metal, swords and glowing runes"],
+ ["Signature","signature","Personal handwritten signature lettering"]
+];
+
+const gallery=document.getElementById("gallery");
+let selected=null;
+
+styles.forEach((s,i)=>{
+ const card=document.createElement("div");
+ card.className="card";
+ card.innerHTML=`<div class="word ${s[1]}">RIM</div><div class="name">${String(i+1).padStart(2,"0")} · ${s[0]}</div>`;
+ card.onclick=()=>openPreview(s);
+ gallery.appendChild(card);
+});
+
+function openPreview(s){
+ selected=s;
+ document.getElementById("preview").style.display="block";
+ document.getElementById("previewName").textContent=s[0];
+ const large=document.getElementById("large");
+ large.className="word "+s[1];
+ large.textContent="RIM";
+ document.getElementById("copyPrompt").textContent=
+ "Design prompt: Exact word RIM, "+s[2]+
+ ". Premium quality, sharp readable lettering, balanced composition.";
+ document.getElementById("preview").scrollIntoView({behavior:"smooth"});
+}
+function closePreview(){
+ document.getElementById("preview").style.display="none";
+}
+function copyPrompt(){
+ if(!selected)return;
+ const text="Create a typography design showing the exact word RIM. Style: "+
+ selected[0]+". "+selected[2]+". Keep the letters clear and readable.";
+ navigator.clipboard.writeText(text).then(()=>alert("Prompt copied!"))
+ .catch(()=>alert(text));
+}
+function downloadDesign(){
+ if(!selected)return;
+ const canvas=document.createElement("canvas");
+ canvas.width=1000;canvas.height=1000;
+ const ctx=canvas.getContext("2d");
+ ctx.fillStyle="#050505";ctx.fillRect(0,0,1000,1000);
+ ctx.textAlign="center";ctx.textBaseline="middle";
+ ctx.font="bold 230px Georgia";
+ ctx.fillStyle=selected[1]==="royal"?"#e7c46d":
+ selected[1]==="neon"?"#80f5ff":
+ selected[1]==="fire"?"#ff842a":
+ selected[1]==="floral"?"#f2a9c7":"#eeeeee";
+ ctx.shadowColor=ctx.fillStyle;ctx.shadowBlur=24;
+ ctx.fillText("RIM",500,490);
+ ctx.shadowBlur=0;ctx.font="26px Arial";ctx.fillStyle="#aaa";
+ ctx.fillText(selected[0].toUpperCase(),500,650);
+ const a=document.createElement("a");
+ a.download="RIM-"+selected[0].replaceAll(" ","-")+".png";
+ a.href=canvas.toDataURL("image/png");a.click();
+}
+</script>
 </body>
 </html>
